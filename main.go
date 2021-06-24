@@ -17,7 +17,7 @@ var err error
 func main() {
 	godotenv.Load()
 	setupDB()
-	setupRouter()
+	SetupRouter()
 }
 
 func setupDB() {

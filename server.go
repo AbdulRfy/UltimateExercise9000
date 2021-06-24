@@ -153,9 +153,14 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllUserTasks(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
+	userId, err := jwtToken.ExtractTokenID(r)
+	if err != nil {
+		response.RespondWithError(w, http.StatusUnprocessableEntity, "Unauthorized")
+		return
+	}
+
 	var tasks []models.Task
-	if clonedDb := db.Where("user_id = ? OR owner_id = ?", params["userId"], params["userId"]).Find(&tasks); clonedDb.Error != nil {
+	if clonedDb := db.Where("user_id = ? OR owner_id = ?", userId, userId).Find(&tasks); clonedDb.Error != nil {
 		response.RespondWithError(w, http.StatusUnprocessableEntity, err.Error())
 		return
 	}

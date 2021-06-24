@@ -10,7 +10,7 @@ import (
 	"ultimate.com/exercise/authguard"
 )
 
-func setupRouter() {
+func SetupRouter() {
 
 	routerListenAddress := os.Getenv("RouterListenAddress")
 
@@ -22,7 +22,7 @@ func setupRouter() {
 	router.Handle("/task/{id:[0-9]+}", authguard.IsAuthorized(editTask)).Methods("PUT")
 	router.Handle("/task/{id:[0-9]+}", authguard.IsAuthorized(deleteTask)).Methods("DELETE")
 	router.Handle("/task", authguard.IsAuthorized(getAllUserTasks)).Methods("GET")
-	router.Handle("/task/assign", authguard.IsAuthorized(assignTask)).Methods("PUT")
+	router.Handle("/task/{id:[0-9]+}/assign", authguard.IsAuthorized(assignTask)).Methods("PUT")
 
 	handler := cors.Default().Handler(router)
 	log.Fatal(http.ListenAndServe(routerListenAddress, handler))

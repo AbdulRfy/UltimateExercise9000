@@ -8,7 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	models "ultimate.com/exercise/Models"
-	jwtToken "ultimate.com/exercise/jwtToken"
+	jwtToken "ultimate.com/exercise/jwttoken"
 	response "ultimate.com/exercise/responses"
 )
 

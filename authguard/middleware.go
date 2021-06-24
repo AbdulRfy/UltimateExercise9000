@@ -3,7 +3,7 @@ package authguard
 import (
 	"net/http"
 
-	jwttoken "ultimate.com/exercise/jwtToken"
+	jwttoken "ultimate.com/exercise/jwttoken"
 	response "ultimate.com/exercise/responses"
 )
 

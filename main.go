@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/jinzhu/gorm"
+	models "ultimate.com/exercise/Models"
 
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
@@ -38,9 +39,9 @@ func setupDB() {
 		panic("failed to connect database")
 	}
 
-	db.AutoMigrate(&User{})
+	db.AutoMigrate(&models.User{})
 
-	db.AutoMigrate(&Task{})
+	db.AutoMigrate(&models.Task{})
 
-	db.AutoMigrate(&TaskAssign{})
+	db.AutoMigrate(&models.TaskAssign{})
 }

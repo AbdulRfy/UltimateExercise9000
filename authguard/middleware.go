@@ -3,8 +3,8 @@ package authguard
 import (
 	"net/http"
 
-	response "ultimate.com/exercise/apiresponse"
 	jwttoken "ultimate.com/exercise/jwtToken"
+	response "ultimate.com/exercise/responses"
 )
 
 func IsAuthorized(endpoint func(http.ResponseWriter, *http.Request)) http.Handler {

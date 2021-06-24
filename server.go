@@ -8,8 +8,8 @@ import (
 
 	"github.com/gorilla/mux"
 	models "ultimate.com/exercise/Models"
-	response "ultimate.com/exercise/apiresponse"
 	jwtToken "ultimate.com/exercise/jwtToken"
+	response "ultimate.com/exercise/responses"
 )
 
 func registerUser(w http.ResponseWriter, r *http.Request) {

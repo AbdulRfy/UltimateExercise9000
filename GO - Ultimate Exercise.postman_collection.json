@@ -55,20 +55,30 @@
 		{
 			"name": "Add Task",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MjQ1MzMyNjQsInVzZXJfaWQiOjF9.aZzmY6vgWRO3jcOUK3fMI3nZ3LlT59sI6V_6PJoAz_s",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\" : \"Task2\",\n    \"dueDate\" : \"2022-01-02 15:04:05\"\n}"
+					"raw": "{\n    \"name\" : \"Me third task\",\n    \"dueDate\" : \"2022-01-02 15:04:05\"\n}"
 				},
 				"url": {
-					"raw": "localhost:8000/addTask",
+					"raw": "localhost:8000/task",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"addTask"
+						"task"
 					]
 				}
 			},
@@ -102,14 +112,14 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8000/deleteTask/1",
+					"raw": "localhost:8000/task/6",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"deleteTask",
-						"1"
+						"task",
+						"6"
 					]
 				}
 			},
@@ -150,18 +160,34 @@
 		},
 		{
 			"name": "Get All User Tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE2MjQ1MzMyNjQsInVzZXJfaWQiOjF9.aZzmY6vgWRO3jcOUK3fMI3nZ3LlT59sI6V_6PJoAz_s",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "localhost:8000/getAllUserTasks/2",
+					"raw": "localhost:8000/task",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"getAllUserTasks",
-						"2"
+						"task"
 					]
 				}
 			},

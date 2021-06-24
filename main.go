@@ -23,9 +23,12 @@ func setupDB() {
 	dbUserName := os.Getenv("DBUserName")
 	dbName := os.Getenv("DBName")
 	dbPassword := os.Getenv("DBPassword")
+	dbPort := os.Getenv("DBPort")
+	hostName := os.Getenv("HostName")
+	sslMode := os.Getenv("SSLMode")
 
 	connectionString :=
-		fmt.Sprintf("host=localhost port=5432 user=%s password=%s dbname=%s sslmode=disable", dbUserName, dbPassword, dbName)
+		fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s", hostName, dbPort, dbUserName, dbPassword, dbName, sslMode)
 
 	db, err = gorm.Open("postgres", connectionString)
 
@@ -41,5 +44,3 @@ func setupDB() {
 
 	db.AutoMigrate(&TaskAssign{})
 }
-
-

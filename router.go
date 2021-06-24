@@ -3,12 +3,16 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
 
 func setupRouter() {
+
+	routerListenAddress := os.Getenv("RouterListenAddress")
+
 	router := mux.NewRouter()
 
 	router.HandleFunc("/register", registerUser).Methods("POST")
@@ -20,5 +24,5 @@ func setupRouter() {
 	router.Handle("/assignTask", isAuthorized(assignTask)).Methods("PUT")
 
 	handler := cors.Default().Handler(router)
-	log.Fatal(http.ListenAndServe(":8000", handler))
+	log.Fatal(http.ListenAndServe(routerListenAddress, handler))
 }

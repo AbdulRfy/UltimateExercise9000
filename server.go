@@ -68,14 +68,19 @@ func loginUser(w http.ResponseWriter, r *http.Request) {
 
 func addTask(w http.ResponseWriter, r *http.Request) {
 
+	userId, err := extractTokenID(r)
+	if err != nil {
+		respondWithError(w, http.StatusUnprocessableEntity, "Unauthorized")
+		return
+	}
+
 	var newTask Task
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&newTask); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	defer r.Body.Close()
-
+	newTask.OwnerId = userId
 	if clonedDb := db.Create(&newTask); clonedDb.Error != nil {
 		respondWithError(w, http.StatusBadRequest, clonedDb.Error.Error())
 		return
@@ -147,7 +152,7 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 func getAllUserTasks(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var tasks []Task
-	if clonedDb := db.Where("user_id = ?", params["userId"]).Find(&tasks); clonedDb.Error != nil {
+	if clonedDb := db.Where("user_id = ? OR owner_id = ?", params["userId"], params["userId"]).Find(&tasks); clonedDb.Error != nil {
 		respondWithError(w, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
@@ -204,21 +209,22 @@ func deletePendingAssignTaskWithId(id string) {
 }
 
 func checkPendingTaskAssignsFor(user User) {
-	pendingTask := TaskAssign{}
-	if clonedDb := db.Where("assigne_email = ?", user.Email).Find(&pendingTask); clonedDb.Error != nil {
+	var pendingTasks []TaskAssign
+	if clonedDb := db.Where("assigne_email = ?", user.Email).Find(&pendingTasks); clonedDb.Error != nil {
 		return
 	}
 
-	fetchedTask := Task{}
+	for _, pTask := range pendingTasks {
+		fetchedTask := Task{}
+		if clonedDb := db.First(&fetchedTask, pTask.TaskId); clonedDb.Error != nil {
+			return
+		}
+		fetchedTask.UserId = user.ID
 
-	if clonedDb := db.First(&fetchedTask, pendingTask.TaskId); clonedDb.Error != nil {
-		return
+		db.Save(&fetchedTask)
+		u32Str := fmt.Sprint(fetchedTask.ID)
+		deletePendingAssignTaskWithId(u32Str)
 	}
-	fetchedTask.UserId = user.ID
-
-	db.Save(&fetchedTask)
-	u32Str := fmt.Sprint(fetchedTask.ID)
-	deletePendingAssignTaskWithId(u32Str)
 }
 
 func respondWithError(w http.ResponseWriter, code int, message string) {

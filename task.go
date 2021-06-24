@@ -6,6 +6,7 @@ import (
 
 type Task struct {
 	ID      uint32 `gorm:"size:100;not null;" json:"id"`
+	OwnerId uint32 `json:"-"`
 	UserId  uint32 `json:"userId,omitempty"`
 	Name    string `json:"name"`
 	DueDate string `json:"dueDate"`

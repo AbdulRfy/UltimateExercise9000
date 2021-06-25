@@ -1,4 +1,4 @@
-package main
+package controller
 
 import (
 	"encoding/json"
@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	models "ultimate.com/exercise/Models"
 	jwtToken "ultimate.com/exercise/jwttoken"
 	response "ultimate.com/exercise/responses"

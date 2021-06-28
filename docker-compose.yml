@@ -1,0 +1,32 @@
+version: "2"
+services:
+  db:
+    image: postgres:13.3-alpine
+    container_name: "database"
+    ports: 
+      - "5433:5432"
+    env_file:
+      - .env
+    networks: 
+      - fullstack
+    volumes: 
+      - database_postgres:/Library/PostgreSQL/13/data
+
+  web:
+    build: .
+    container_name: "rest-api"
+    env_file:
+      - .env
+    ports: 
+      - "8000:8000"
+    depends_on: 
+      - db
+    networks: 
+      - fullstack
+
+volumes: 
+  database_postgres:
+
+networks: 
+  fullstack: 
+    driver: bridge

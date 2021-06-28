@@ -12,9 +12,9 @@ var db *gorm.DB
 var err error
 
 func SetupDB() {
-	dbUserName := os.Getenv("DBUserName")
-	dbName := os.Getenv("DBName")
-	dbPassword := os.Getenv("DBPassword")
+	dbUserName := os.Getenv("DB_USERNAME")
+	dbName := os.Getenv("DB_DB")
+	dbPassword := os.Getenv("DB_PASSWORD")
 	dbPort := os.Getenv("DBPort")
 	hostName := os.Getenv("HostName")
 	sslMode := os.Getenv("SSLMode")
